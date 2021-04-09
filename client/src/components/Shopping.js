@@ -9,6 +9,7 @@ const Shopping = ({ handleCheckoutClick }) => {
         alt="Card image cap"
       />
       <h3 className="card-title text-center">SCANDINAVIAN VASE</h3>
+      <h4 className="text-center text-primary">Price: $100</h4>
       <button
         type="button"
         id="checkout-button"

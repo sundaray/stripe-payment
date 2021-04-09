@@ -6,6 +6,8 @@ module.exports = function (app) {
       "/api/users/register",
       "/api/download",
       "/api/payment/checkout-session",
+      "/api/order/success",
+      "/api/email/book",
     ],
     createProxyMiddleware({
       target: "http://localhost:5000",

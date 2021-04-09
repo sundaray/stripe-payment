@@ -9,6 +9,8 @@ const {
 } = require("./middleware/errorMiddleware");
 const userRoutes = require("./routes/userRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const bookRoutes = require("./routes/bookRoutes");
 
 dotenv.config();
 
@@ -20,6 +22,8 @@ app.use(express.json());
 
 app.use("/api/users", userRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/order", orderRoutes);
+app.use("/api/email", bookRoutes);
 
 app.use(notFound);
 app.use(globalErrorHandler);

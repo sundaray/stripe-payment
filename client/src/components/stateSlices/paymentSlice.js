@@ -3,26 +3,17 @@ import axios from "axios";
 
 const initialState = {
   status: "idle",
-  session: null,
+  sessionId: null,
   error: null,
 };
 
-export const fetchCheckoutSession = createAsyncThunk(
-  "payment/fetchCheckoutSession",
-  async (token, { rejectWithValue }) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
+export const createCheckoutSession = createAsyncThunk(
+  "payment/createCheckoutSession",
+  async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(
-        "/api/payment/checkout-session",
-        config
-      );
-      return data;
+      const { data } = await axios.post("/api/payment/checkout-session");
+      const sessionId = data.id;
+      return sessionId;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
@@ -34,14 +25,14 @@ export const paymentSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchCheckoutSession.pending]: (state, action) => {
+    [createCheckoutSession.pending]: (state, action) => {
       state.status = "loading";
     },
-    [fetchCheckoutSession.fulfilled]: (state, action) => {
+    [createCheckoutSession.fulfilled]: (state, action) => {
       state.status = "succeeded";
-      state.session = action.payload;
+      state.sessionId = action.payload;
     },
-    [fetchCheckoutSession.rejected]: (state, action) => {
+    [createCheckoutSession.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.payload.message;
     },

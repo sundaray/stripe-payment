@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-
 import Header from "./components/Header";
 import Shopping from "./components/Shopping";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
+import CheckoutFailure from "./components/CheckoutFailure";
+import CheckoutSuccess from "./components/CheckoutSuccess";
+
 import { Route, Switch } from "react-router-dom";
+import { createCheckoutSession } from "./components/stateSlices/paymentSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCheckoutSession } from "./components/stateSlices/paymentSlice";
 
 import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(
@@ -29,23 +31,19 @@ const App = () => {
   };
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.login);
 
-  const handleCheckoutClick = async (e) => {
-    e.preventDefault();
-    // const stripe = await stripePromise;
+  const { sessionId } = useSelector((state) => state.payment);
 
-    // const response = await fetch("/api/payment/create-checkout-session", {
-    //   method: "POST",
-    // });
+  const handleCheckoutClick = async () => {
+    const stripe = await stripePromise;
 
-    // const session = await response.json();
-    dispatch(fetchCheckoutSession({ token: user.token }));
+    dispatch(createCheckoutSession());
 
-    // When the customer clicks on the button, redirect them to Checkout.
-    // const result = await stripe.redirectToCheckout({
-    //   sessionId: session.id,
-    // });
+    if (sessionId) {
+      await stripe.redirectToCheckout({
+        sessionId,
+      });
+    }
   };
 
   return (
@@ -65,6 +63,8 @@ const App = () => {
         />
         <Route path="/registerLogin" component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
+        <Route path="/failure" component={CheckoutFailure} />
+        <Route path="/success" component={CheckoutSuccess} />
       </Switch>
     </>
   );

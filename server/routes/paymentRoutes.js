@@ -1,5 +1,9 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const router = express.Router();
@@ -19,14 +23,14 @@ router.post(
               name: "Vase",
               images: ["https://i.imgur.com/EHyR2nP.png"],
             },
-            unit_amount: 70000,
+            unit_amount: 10000,
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: `${YOUR_DOMAIN}?success=true`,
-      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      success_url: `${YOUR_DOMAIN}success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${YOUR_DOMAIN}failure`,
     });
     res.json({ id: session.id });
   })
