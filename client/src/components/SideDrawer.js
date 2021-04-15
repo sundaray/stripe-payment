@@ -45,7 +45,15 @@ const SideDrawer = ({ menuOpen, onSidedrawerNavbarLinkClick }) => {
           <nav className="sideDrawer-navbar">
             <ul className="sideDrawer-navbar-list">
               <li onClick={onSidedrawerNavbarLinkClick}>
-                <Link to="/buy" className="sideDrawer-navbar-link">
+                <Link
+                  to="/buy"
+                  className="sideDrawer-navbar-link"
+                  activeStyle={{
+                    color: "#F2F2F2",
+                    borderBottom: ".3rem solid orangered",
+                    padding: "1rem 0",
+                  }}
+                >
                   Shop
                 </Link>
               </li>
@@ -80,7 +88,11 @@ const SideDrawer = ({ menuOpen, onSidedrawerNavbarLinkClick }) => {
                   <Link
                     to="/registerLogin"
                     className="navbar-link"
-                    activeStyle={{ color: "#F2F2F2" }}
+                    activeStyle={{
+                      color: "#F2F2F2",
+                      borderBottom: ".3rem solid orangered",
+                      padding: "1rem 0",
+                    }}
                     onClick={onSidedrawerNavbarLinkClick}
                   >
                     Register/Login

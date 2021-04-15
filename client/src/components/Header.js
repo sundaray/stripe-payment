@@ -35,7 +35,11 @@ const Header = ({
           <NavLink
             to="/buy"
             className="navbar-link"
-            activeStyle={{ color: "#F2F2F2" }}
+            activeStyle={{
+              color: "#F2F2F2",
+              borderBottom: ".3rem solid orangered",
+              padding: "1rem 0",
+            }}
           >
             Shop
           </NavLink>
@@ -70,7 +74,11 @@ const Header = ({
             <NavLink
               to="/registerLogin"
               className="navbar-link"
-              activeStyle={{ color: "#F2F2F2" }}
+              activeStyle={{
+                color: "#F2F2F2",
+                borderBottom: ".3rem solid orangered",
+                padding: "1rem 0",
+              }}
             >
               Register/Login
             </NavLink>
